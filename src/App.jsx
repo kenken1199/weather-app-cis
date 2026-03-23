@@ -31,11 +31,29 @@ function App() {
         return;
       }
 
-      // グラフ用データ作成（5日分）
-      const chartData = data.list.map((item) => ({
-        time: item.dt_txt.slice(5, 16),
-        temp: item.main.temp,
-      }));
+      // 日別平均データ作成
+      const dailyData = {};
+
+      data.list.forEach((item) => {
+        const date = item.dt_txt.slice(0, 10);
+
+        if (!dailyData[date]) {
+          dailyData[date] = [];
+        }
+
+        dailyData[date].push(item.main.temp);
+      });
+
+      const chartData = Object.keys(dailyData).map((date) => {
+        const temps = dailyData[date];
+
+        const avg = temps.reduce((sum, temp) => sum + temp, 0) / temps.length;
+
+        return {
+          date: date.slice(5),
+          temp: Number(avg.toFixed(1)),
+        };
+      });
 
       setWeather({
         city: data.city.name,
@@ -53,7 +71,7 @@ function App() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>⛅天気アプリ</h1>
+      <h1>⛅天気アプリ (5日間平均)</h1>
 
       <input
         value={city}
@@ -78,9 +96,9 @@ function App() {
           <p>現在気温：{weather.temp} ℃</p>
           <p>{weather.description}</p>
 
-          {/* グラフ */}
+          {/* 日別平均グラフ */}
           <LineChart width={500} height={300} data={weather.chartData}>
-            <XAxis dataKey="time" />
+            <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
             <Line type="monotone" dataKey="temp" />
