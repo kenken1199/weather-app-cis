@@ -1,16 +1,70 @@
-# React + Vite
+# 🌤️ Weather App（天気アプリ）
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+都市名を入力すると、現在の天気と5日間の平均気温をグラフで表示するWebアプリです。
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🔗 URL
+https://your-app-url.vercel.app
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📸 スクリーンショット
 
-## Expanding the ESLint configuration
+（ここに画像貼る）
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ 使用技術
+
+- React（Vite）
+- Tailwind CSS
+- Recharts
+- OpenWeatherMap API
+
+---
+
+## 🚀 機能
+
+- 都市名検索による天気取得
+- 現在の気温・天気の表示
+- 5日間の平均気温グラフ表示
+- ローディング表示
+- エラーハンドリング（都市未検出・通信エラー）
+- レスポンシブ対応（スマホOK）
+
+---
+
+## 💡 工夫した点
+
+- APIから取得した3時間ごとのデータを日別にグループ化し、平均気温を算出
+- ローディング状態・エラー状態を分離してUXを向上
+- Tailwind CSSを用いてシンプルで見やすいUIを設計
+- グラフの余白やラベル調整を行い、スマホでも見やすくした
+
+---
+
+## 🧠 学んだこと
+
+- Reactの状態管理（useState）の使い方
+- 非同期処理（fetch / async / await）
+- APIデータの加工（グルーピング・平均計算）
+- データ可視化（Recharts）
+- UI設計とレスポンシブ対応
+
+---
+
+## ⚠️ 課題・改善点
+
+- 天気アイコンの追加
+- 地名の自動補完機能
+- 現在地の天気取得
+- UIのさらなる改善
+
+---
+
+## 📦 セットアップ
+
+```bash
+npm install
+npm run dev
