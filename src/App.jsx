@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LineChart, Line, XAxis, YAxis, Tooltip } from "recharts";
+import { ResponsiveContainer } from "recharts";
 import "./App.css";
 
 function App() {
@@ -70,41 +71,77 @@ function App() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>⛅天気アプリ (5日間平均)</h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-400 via-blue-300 to-blue-200 flex items-center justify-center p-4">
+      <div className="bg-white/80 backdrop-blur-md shadow-2xl rounded-3xl p-6 w-full max-w-md border border-white/40">
+        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          ⛅ 天気アプリ
+        </h1>
 
-      <input
-        value={city}
-        onChange={(e) => setCity(e.target.value)}
-        placeholder="都市名を入力"
-      />
-
-      <button onClick={getWeather} disabled={loading}>
-        検索
-      </button>
-
-      {/* ローディング表示 */}
-      {loading && <div className="spinner"></div>}
-
-      {/* エラー表示 */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-
-      {/* 天気表示 */}
-      {weather && !loading && (
-        <div>
-          <h2>{weather.city}</h2>
-          <p>現在気温：{weather.temp} ℃</p>
-          <p>{weather.description}</p>
-
-          {/* 日別平均グラフ */}
-          <LineChart width={500} height={300} data={weather.chartData}>
-            <XAxis dataKey="date" />
-            <YAxis />
-            <Tooltip />
-            <Line type="monotone" dataKey="temp" />
-          </LineChart>
+        {/* 入力 */}
+        <div className="flex gap-2 mb-5">
+          <input
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="都市名を入力（例：Tokyo）"
+            className="flex-1 border border-gray-300 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
+          />
+          <button
+            onClick={getWeather}
+            disabled={loading}
+            className="bg-blue-500 text-white px-4 rounded-xl hover:bg-blue-600 active:scale-95 transition disabled:opacity-50"
+          >
+            検索
+          </button>
         </div>
-      )}
+
+        {/* ローディング */}
+        {loading && (
+          <div className="flex justify-center my-6">
+            <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+          </div>
+        )}
+
+        {/* エラー */}
+        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+
+        {/* 結果 */}
+        {weather && !loading && (
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold text-gray-700">
+              {weather.city}
+            </h2>
+
+            <p className="text-4xl font-bold my-2 text-blue-600">
+              {weather.temp}℃
+            </p>
+
+            <p className="text-gray-600 mb-4 capitalize">
+              {weather.description}
+            </p>
+
+            {/* グラフ */}
+            <div className="bg-white rounded-xl p-3 shadow-inner">
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart
+                  data={weather.chartData}
+                  margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
+                >
+                  <XAxis dataKey="date" interval={0} fontSize={12} />
+                  <YAxis />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="temp"
+                    stroke="#3b82f6"
+                    strokeWidth={3}
+                    dot={{ r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
