@@ -5,7 +5,7 @@
 ---
 
 ## 🔗 URL
-https://your-app-url.vercel.app
+https://weather-app-cis.vercel.app
 
 ---
 
